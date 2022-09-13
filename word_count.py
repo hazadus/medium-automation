@@ -2,6 +2,7 @@ import csv
 import re
 
 INPUT_CSV_FILE = 'hazadus_lair_all_messages.csv'
+OUTPUT_CSV_FILE = 'word_stats.csv'
 INPUT_COLUMN_TITLE = 'message'
 
 stop_words = ['это', 'что', 'как', 'там', 'все', 'надо', 'уже', 'есть', 'вот', 'так', 'ещё', 'для', 'тоже', 'или',
@@ -17,7 +18,7 @@ def sort_words_by_count_desc(word_count_list: list) -> list:
 
     for i in range(len(sorted_list)):
         for j in range(i + 1, len(sorted_list)):
-            if sorted_list[j][1] > sorted_list[i][1]:
+            if sorted_list[j][0] > sorted_list[i][0]:
                 sorted_list[j], sorted_list[i] = sorted_list[i], sorted_list[j]
 
     return sorted_list
@@ -41,7 +42,7 @@ with open(INPUT_CSV_FILE, newline='') as csv_file:
 print('Word count:', len(all_words))
 for word in all_words:
     if word not in stop_words and len(word) > 2:
-        word_count.append([word, all_words.count(word)])
+        word_count.append([all_words.count(word), word])
 
     for _ in range(all_words.count(word)):  # remove dupes
         all_words.remove(word)
@@ -50,6 +51,13 @@ for word in all_words:
 print('Unique word count:', len(word_count))
 print('Word stats:')
 
-for word in sort_words_by_count_desc(word_count):
-    if word[1] > 3:
-        print(f' - {word[1]} \t {word[0]}')
+sorted_words = sort_words_by_count_desc(word_count)
+
+for word in sorted_words:
+    if word[0] > 3:
+        print(f' - {word[0]} \t {word[1]}')
+
+# https://www.wordclouds.com - create fun wordclouds from csv there!
+with open(OUTPUT_CSV_FILE, 'w', newline='') as output_file:
+    writer = csv.writer(output_file)
+    writer.writerows(sorted_words)
