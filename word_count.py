@@ -47,15 +47,14 @@ for word in all_words:
     for _ in range(all_words.count(word)):  # remove dupes
         all_words.remove(word)
 
-# TODO: save stats in CSV or Excel
+# Sort, print results, save in CSV
+sorted_words = sort_words_by_count_desc(word_count)
 print('Unique word count:', len(word_count))
 print('Word stats:')
-
-sorted_words = sort_words_by_count_desc(word_count)
-
-for word in sorted_words:
-    if word[0] > 3:
-        print(f' - {word[0]} \t {word[1]}')
+print('\n'.join([f' -- {word[0]} \t {word[1]}'
+                 for word in sorted_words
+                 if word[0] > 3
+                 ]))
 
 # https://www.wordclouds.com - create fun wordclouds from csv there!
 with open(OUTPUT_CSV_FILE, 'w', newline='') as output_file:
