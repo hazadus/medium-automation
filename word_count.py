@@ -36,10 +36,10 @@ with open(INPUT_CSV_FILE, newline='') as csv_file:
         message = re.sub(r'[\W\d]', r' ', message)
         all_words.extend(list(message.split()))
         msg_count += 1
-    print('Total messages:', msg_count)
+    print('Total messages:\t{:,d}'.format(msg_count))
 
 # Count words / remove dupes
-print('Word count:', len(all_words))
+print('Total words:\t{:,d}'.format(len(all_words)))
 for word in all_words:
     if word not in stop_words and len(word) > 2:
         word_count.append([all_words.count(word), word])
@@ -49,8 +49,8 @@ for word in all_words:
 
 # Sort, print results, save in CSV
 sorted_words = sort_words_by_count_desc(word_count)
-print('Unique word count:', len(word_count))
-print('Word stats:')
+print('Unique words:\t{:,d}'.format(len(word_count)))
+print('\nWord rating:')
 print('\n'.join([f' -- {word[0]} \t {word[1]}'
                  for word in sorted_words
                  if word[0] > 3
