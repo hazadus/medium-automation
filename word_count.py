@@ -63,9 +63,9 @@ with open(OUTPUT_CSV_FILE, 'w', newline='') as output_file:
     writer.writerows(sorted_words)
 
 # Print all the stats to console
-print('Total messages:\t{:,d}'.format(msg_count))
-print('Total words:\t{:,d}'.format(len(all_words)))
-print('Unique words:\t{:,d}'.format(len(word_stats)))
+print('\U0001F4CATotal messages:\t{:,d}'.format(msg_count))
+print('\U0001F4CCTotal words:\t\t{:,d}'.format(len(all_words)))
+print('\U0001F4CCUnique words:\t\t{:,d}'.format(len(word_stats)))
 print('\nWord rating:\nCount\tWord')
 print('\n'.join([f'{word[0]}\t\t{word[1]}'
                  for word in sorted_words
